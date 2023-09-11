@@ -215,18 +215,18 @@ using the stored procedure and observe the results
 drop procedure if exists update_account_table2;
 
 delimiter //
-create procedure update_account_table2 (in param1 int, in param2 int, in param3 varchar(100), in param4 int, out param5 varchar(100))
+create procedure update_account_table2 (in param1 int, in param2 int, in param3 varchar(100), in param4 int )
 begin
   declare HasError char(100) default 'Table updated!';
   declare exit handler for sqlexception SELECT 'This account already exists in the database' message;
   insert into bank.account values(param1, param2, param3, param4);
   -- we are using param 5 to return if the query was executed or not.
-  select HasError into param5;
+  select HasError;
 
 end;
 //
 delimiter ;
 
-call update_account_table2(1,1,"131313", 31, @x);
+call update_account_table2(1,1,"131313", 31);
 
-select @x;
+call update_account_table2(112314123,1,"131313", 31);
